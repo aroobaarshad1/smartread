@@ -3,14 +3,14 @@ import ChatPageContent from './ChatPageContent';
 import { getChatsData } from './chatUtils';
 import { Slab } from 'react-loading-indicators';
 
-type Props = {
+type PageProps = {
     params: {
         chatId: string;
     };
     searchParams?: Record<string, string | string[] | undefined>;
 };
 
-const ChatPage = async ({ params: { chatId } }: Props) => {
+const ChatPage = async ({ params: { chatId } }: PageProps) => {
     // Server-side: Fetch data
     const chatsData = await getChatsData(chatId);
 

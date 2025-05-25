@@ -7,7 +7,7 @@ type PageProps = {
     params: {
         chatId: string;
     };
-    searchParams?: Record<string, string | string[] | undefined>;
+     searchParams?: { [key: string]: string | string[] | undefined };
 };
 
 const ChatPage = async ({ params: { chatId } }: PageProps) => {

@@ -3,12 +3,13 @@ import ChatPageContent from './ChatPageContent';
 import { getChatsData } from './chatUtils';
 import { Slab } from 'react-loading-indicators';
 
-interface PageProps {
+// Use the exact type that Next.js expects
+type PageProps = {
   params: { chatId: string };
   searchParams?: { [key: string]: string | string[] | undefined };
-}
+};
 
-export default async function ChatPage({ params }: PageProps) {
+export default async function Page({ params }: PageProps) {
   const { chatId } = params;
 
   // Server-side data fetching with error handling
@@ -34,3 +35,7 @@ export default async function ChatPage({ params }: PageProps) {
     </div>
   );
 }
+
+// Optional: Add these if you need dynamic rendering
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;

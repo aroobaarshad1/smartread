@@ -1,24 +1,25 @@
-import { Suspense } from 'react';
-import ChatPageContent from './ChatPageContent';
-import { getChatsData } from './chatUtils';
-import { Slab } from 'react-loading-indicators';
+import { Suspense } from "react"
+import ChatPageContent from "./ChatPageContent"
+import { getChatsData } from "./chatUtils"
+import { Slab } from "react-loading-indicators"
 
-// Use the exact type that Next.js expects
+// Updated type for Next.js 15 - params is now a Promise
 type PageProps = {
-  params: { chatId: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
-};
+  params: Promise<{ chatId: string }>
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+}
 
 export default async function Page({ params }: PageProps) {
-  const { chatId } = params;
+  // Await the params Promise in Next.js 15
+  const { chatId } = await params
 
   // Server-side data fetching with error handling
-  let chatsData;
+  let chatsData
   try {
-    chatsData = await getChatsData(chatId);
+    chatsData = await getChatsData(chatId)
   } catch (error) {
-    console.error('Failed to load chat data:', error);
-    return <div className="h-screen grid place-items-center">Error loading chat</div>;
+    console.error("Failed to load chat data:", error)
+    return <div className="h-screen grid place-items-center">Error loading chat</div>
   }
 
   return (
@@ -33,9 +34,9 @@ export default async function Page({ params }: PageProps) {
         <ChatPageContent chatId={chatId} initialChatsData={chatsData} />
       </Suspense>
     </div>
-  );
+  )
 }
 
 // Optional: Add these if you need dynamic rendering
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const dynamic = "force-dynamic"
+export const revalidate = 0

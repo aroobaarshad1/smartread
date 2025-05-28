@@ -3,15 +3,14 @@ import ChatPageContent from "./ChatPageContent"
 import { getChatsData } from "./chatUtils"
 import { Slab } from "react-loading-indicators"
 
-// Updated type for Next.js 15 - params is now a Promise
+// Updated type for Next.js 15
 type PageProps = {
-  params: Promise<{ chatId: string }>
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+  params: { chatId: string }
+  searchParams?: { [key: string]: string | string[] | undefined }
 }
 
 export default async function Page({ params }: PageProps) {
-  // Await the params Promise in Next.js 15
-  const { chatId } = await params
+  const { chatId } = params
 
   // Server-side data fetching with error handling
   let chatsData

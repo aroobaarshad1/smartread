@@ -19,7 +19,7 @@ function contentToString(content: any): string {
 
 async function ingestDocument(fileKey: string, pdfUrl: string, pdfName: string) {
   try {
-    const response = await fetch("https://flask-backend-603974211306.us-central1.run.app/ingest", {
+    const response = await fetch("https://chatpdfbackend-production.up.railway.app//ingest", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -39,7 +39,7 @@ async function ingestDocument(fileKey: string, pdfUrl: string, pdfName: string) 
 
 async function getContext(fileKey: string, query: string): Promise<string> {
   try {
-    const response = await fetch("https://flask-backend-603974211306.us-central1.run.app/query", {
+    const response = await fetch("https://chatpdfbackend-production.up.railway.app//query", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -1,34 +1,41 @@
+// app/chat/[chatId]/page.tsx
+
 import { Suspense } from 'react';
 import ChatPageContent from './ChatPageContent';
 import { getChatsData } from './chatUtils';
 import { Slab } from 'react-loading-indicators';
 
-type PageProps = {
-    params: {
-        chatId: string;
-    };
-     searchParams?: { [key: string]: string | string[] | undefined };
+type Props = {
+  params: { chatId: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
 };
 
-const ChatPage = async ({ params: { chatId } }: PageProps) => {
-    // Server-side: Fetch data
-    const chatsData = await getChatsData(chatId);
+export default async function ChatPage(props: Props) {
+  const { chatId } = props.params;
 
+  let chatsData;
+  try {
+    chatsData = await getChatsData(chatId);
+  } catch (error) {
+    console.error('Failed to load chat data:', error);
     return (
-        // Wrap the ChatPageContent in Suspense for client-side lazy loading or rendering
-        <div className="h-screen overflow-hidden ">
-            <Suspense
-                fallback={
-                    <div className="flex items-center justify-center h-screen">
-                        <Slab color="#32cd32" size="medium" text="" textColor="" />
-                    </div>
-                }
-            >
-                {/* Pass server-side data to the component */}
-                <ChatPageContent chatId={chatId} initialChatsData={chatsData} />
-            </Suspense>
-        </div>
+      <div className="h-screen grid place-items-center">
+        Error loading chat
+      </div>
     );
-};
+  }
 
-export default ChatPage;
+  return (
+    <div className="h-screen overflow-hidden">
+      <Suspense
+        fallback={
+          <div className="flex items-center justify-center h-screen">
+            <Slab color="#32cd32" size="medium" text="" textColor="" />
+          </div>
+        }
+      >
+        <ChatPageContent chatId={chatId} initialChatsData={chatsData} />
+      </Suspense>
+    </div>
+  );
+}

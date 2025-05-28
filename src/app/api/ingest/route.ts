@@ -10,7 +10,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const response = await fetch("http://127.0.0.1:8000/ingest", {
+    const response = await fetch("https://chatpdfbackend-production.up.railway.app//ingest", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
